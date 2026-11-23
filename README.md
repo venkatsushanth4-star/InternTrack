@@ -33,6 +33,16 @@ A PHP + MySQL student internship tracking web application.
 
 For an existing database created from an older version of `database.sql`, import `upgrade_application_tracking.sql` once to add interview and offer tracking fields.
 
+## Deploying on Vercel
+
+This project uses `Dockerfile.vercel` and FrankenPHP so Vercel executes PHP instead of serving `.php` files as downloads. The landing page can load without a database, but account and internship pages require a hosted MySQL database; `localhost` is not available from Vercel.
+
+1. Create a MySQL database with a provider that allows connections from Vercel, then import `database.sql`.
+2. In Vercel, open **Project Settings → Environment Variables** and add `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` for Production.
+3. Redeploy after setting the variables.
+
+Keep database credentials in Vercel environment variables, not in Git. Profile uploads and PHP sessions currently use local files, so they are not durable across Vercel container restarts. Use a traditional PHP host with persistent storage for reliable account sessions and profile pictures.
+
 ## Main files
 - `register.php`, `login.php`: account access
 - `dashboard.php`: student dashboard and summary
